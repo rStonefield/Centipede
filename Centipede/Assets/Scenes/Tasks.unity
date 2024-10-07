@@ -2201,7 +2201,15 @@ PrefabInstance:
       value: TaskListPanel
       objectReference: {fileID: 0}
     - target: {fileID: 1436011012092718431, guid: 5baaf9bcd110c60479a5550496b6ec83, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436011012092718431, guid: 5baaf9bcd110c60479a5550496b6ec83, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436011012092718431, guid: 5baaf9bcd110c60479a5550496b6ec83, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1436011012092718431, guid: 5baaf9bcd110c60479a5550496b6ec83, type: 3}
@@ -2211,6 +2219,26 @@ PrefabInstance:
     - target: {fileID: 1436011012092718431, guid: 5baaf9bcd110c60479a5550496b6ec83, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436011012092718431, guid: 5baaf9bcd110c60479a5550496b6ec83, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1574066791462689265, guid: 5baaf9bcd110c60479a5550496b6ec83, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1574066791462689265, guid: 5baaf9bcd110c60479a5550496b6ec83, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1574066791462689265, guid: 5baaf9bcd110c60479a5550496b6ec83, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1574066791462689265, guid: 5baaf9bcd110c60479a5550496b6ec83, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1574066791462689265, guid: 5baaf9bcd110c60479a5550496b6ec83, type: 3}
       propertyPath: m_SizeDelta.x
