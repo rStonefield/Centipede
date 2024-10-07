@@ -16,7 +16,7 @@ public class PomodoroTimer : MonoBehaviour
     public float pomodoroSessionTime = 1500f; // 25 minutes in seconds
     public float breakTime = 300f; // 5 minutes in seconds
     public float adjustmentSpeed = 0.1f; // How fast the timer adjusts when holding the button
-    public float holdDelay = 0.25f; // Delay before continuous adjustment starts
+    public float holdDelay = 0.8f; // Delay before continuous adjustment starts
 
     //Audio
     public AudioClip pomodoroEndSound; // Sound for Pomodoro end
@@ -94,13 +94,13 @@ public class PomodoroTimer : MonoBehaviour
     // Start continuous increase after delay
     void StartIncreasingPomodoro()
     {
-        InvokeRepeating("IncreasePomodoroTime", 0f, adjustmentSpeed); // Start continuous increase
+        InvokeRepeating("IncreasePomodoroTime", holdDelay, adjustmentSpeed); // Start continuous increase
     }
 
     // Start continuous decrease after delay
     void StartDecreasingPomodoro()
     {
-        InvokeRepeating("DecreasePomodoroTime", 0f, adjustmentSpeed); // Start continuous decrease
+        InvokeRepeating("DecreasePomodoroTime", holdDelay, adjustmentSpeed); // Start continuous decrease
     }
 
     // Handle Holding Down the Break Timer Adjustment Buttons
@@ -127,13 +127,13 @@ public class PomodoroTimer : MonoBehaviour
     // Start continuous increase for break after delay
     void StartIncreasingBreak()
     {
-        InvokeRepeating("IncreaseBreakTime", 0f, adjustmentSpeed); // Start continuous increase
+        InvokeRepeating("IncreaseBreakTime", holdDelay, adjustmentSpeed); // Start continuous increase
     }
 
     // Start continuous decrease for break after delay
     void StartDecreasingBreak()
     {
-        InvokeRepeating("DecreaseBreakTime", 0f, adjustmentSpeed); // Start continuous decrease
+        InvokeRepeating("DecreaseBreakTime", holdDelay, adjustmentSpeed); // Start continuous decrease
     }
 
     public void StartPomodoro()
