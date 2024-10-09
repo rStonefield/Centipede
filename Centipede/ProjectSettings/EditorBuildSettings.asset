@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Analysis.unity
     guid: 18e91e71da7820f45ac834d4fe864e94
+  - enabled: 1
+    path: Assets/Scenes/Character.unity
+    guid: 3712c8d0bb57adc4ca1c342c455467da
   m_configObjects: {}
