@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Slot
+  - Head
+  - Weapon
+  - Body
+  - All_Inv
   layers:
   - Default
   - TransparentFX
