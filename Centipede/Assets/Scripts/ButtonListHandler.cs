@@ -9,10 +9,11 @@ public class ButtonListHandler : MonoBehaviour
     public GameObject buttonPrefab; // The button prefab to instantiate
     public Transform buttonListContent; // The content container for the buttons
     public TMP_InputField taskInputField; // Input field to read text from
-
+    public TMP_InputField taskDurationField;// input time to read from 
     // This function is called when the "Send" button is clicked
     public void OnSendButtonClicked()
     {
+
         // Check if the buttonPrefab and buttonListContent are assigned
         if (buttonPrefab == null || buttonListContent == null)
         {
@@ -22,9 +23,11 @@ public class ButtonListHandler : MonoBehaviour
 
         // Get the input text from the input field
         string inputText = taskInputField.text;
+        string durationText = taskDurationField.text;
+
 
         // Only create the button if the input text is not empty
-        if (!string.IsNullOrEmpty(inputText))
+        if (!string.IsNullOrEmpty(inputText) && !string.IsNullOrEmpty(durationText))
         {
             // Instantiate a new button from the prefab
             GameObject newButton = Instantiate(buttonPrefab, buttonListContent);
@@ -33,7 +36,7 @@ public class ButtonListHandler : MonoBehaviour
             TMP_Text buttonText = newButton.GetComponentInChildren<TMP_Text>();
             if (buttonText != null)
             {
-                buttonText.text = "  "+inputText;
+                buttonText.text = ""+inputText+"           "+durationText;//inputText+"     "+durationText;
             }
             else
             {
