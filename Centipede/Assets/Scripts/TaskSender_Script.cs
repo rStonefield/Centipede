@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 public class Tasks_Sender : MonoBehaviour
 {
     public TMP_InputField taskNameInput; // TextMesh Pro Input Field for task name
-    public TMP_InputField durationInput;  // Text Mesh Pro Input Field for duration
+    //public TMP_InputField durationInput;  // Text Mesh Pro Input Field for duration
     public Transform taskListParent;      // A UI parent to hold task entries
     public GameObject taskUIPrefab;       // Prefab for displaying a task
 
@@ -22,10 +22,10 @@ public class Tasks_Sender : MonoBehaviour
     {
         // Get the values from the input fields
         string taskName = taskNameInput.text;
-        string duration = durationInput.text;
+        //string duration = durationInput.text;
 
         // Check if inputs are not empty
-        if (!string.IsNullOrEmpty(taskName) && !string.IsNullOrEmpty(duration))
+        if (!string.IsNullOrEmpty(taskName)) //&& !string.IsNullOrEmpty(duration))
         {
             // Instantiate the task UI prefab
             GameObject newTaskUI = Instantiate(taskUIPrefab, taskListParent);
@@ -35,12 +35,12 @@ public class Tasks_Sender : MonoBehaviour
             if (texts.Length >= 2)
             {
                 texts[0].text = taskName;      // Set task name
-                texts[1].text = duration;       // Set duration
+                //texts[1].text = duration;       // Set duration
             }
 
             // Clear the input fields after adding the task
             taskNameInput.text = "";
-            durationInput.text = "";
+            //durationInput.text = "";
         }
         else
         {

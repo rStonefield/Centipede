@@ -9,9 +9,9 @@ public class ButtonListHandler : MonoBehaviour
     public GameObject buttonPrefab; // The button prefab to instantiate
     public Transform buttonListContent; // The content container for the buttons
     public TMP_InputField taskInputField; // Input field to read text from
-    public TMP_InputField taskDurationField;// input time to read from 
+    //public TMP_InputField taskDurationField;// input time to read from 
     // This function is called when the "Send" button is clicked
-    public void OnSendButtonClicked()
+    public void OnSendButtonClickedTask()
     {
 
         // Check if the buttonPrefab and buttonListContent are assigned
@@ -23,11 +23,13 @@ public class ButtonListHandler : MonoBehaviour
 
         // Get the input text from the input field
         string inputText = taskInputField.text;
-        string durationText = taskDurationField.text;
-
+        //string durationText = taskDurationField.text;
+        // get 2 different data ! 
+        string TaskInput = inputText.Substring("Task:\n Write Here:".Length).Trim();
+        string durationInput = inputText.Substring(20+"Time:\n".Length).Trim();
 
         // Only create the button if the input text is not empty
-        if (!string.IsNullOrEmpty(inputText) && !string.IsNullOrEmpty(durationText))
+        if (!string.IsNullOrEmpty(inputText))// && !string.IsNullOrEmpty(durationText))
         {
             // Instantiate a new button from the prefab
             GameObject newButton = Instantiate(buttonPrefab, buttonListContent);
@@ -36,7 +38,8 @@ public class ButtonListHandler : MonoBehaviour
             TMP_Text buttonText = newButton.GetComponentInChildren<TMP_Text>();
             if (buttonText != null)
             {
-                buttonText.text = ""+inputText+"           "+durationText;//inputText+"     "+durationText;
+                
+                buttonText.text = TaskInput;         //durationText;//inputText+"     "+durationText;
             }
             else
             {
@@ -44,11 +47,12 @@ public class ButtonListHandler : MonoBehaviour
             }
 
             // Optionally, clear the input field after sending the message
-            taskInputField.text = "";
+            taskInputField.text = "TASK: \n Write Here: ";
         }
         else
         {
             Debug.LogWarning("Input field is empty!");
         }
     }
+    
 }
