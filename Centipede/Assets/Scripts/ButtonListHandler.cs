@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro; // For TextMeshPro
+using System;
 
 public class ButtonListHandler : MonoBehaviour
 {
@@ -26,8 +27,8 @@ public class ButtonListHandler : MonoBehaviour
         //string durationText = taskDurationField.text;
         // get 2 different data ! 
         string TaskInput = inputText.Substring("Task:\n Write Here:".Length).Trim();
-        string durationInput = inputText.Substring(20+"Time:\n".Length).Trim();
-
+        string durationInput = inputText.Substring("Task:\n Write Here:\n \n \n TIME:\n Write Here:".Length).Trim();
+        TaskInput = TaskInput.Split('\n')[0].Trim(); // Take only the first line after trimming
         // Only create the button if the input text is not empty
         if (!string.IsNullOrEmpty(inputText))// && !string.IsNullOrEmpty(durationText))
         {
@@ -39,7 +40,7 @@ public class ButtonListHandler : MonoBehaviour
             if (buttonText != null)
             {
                 
-                buttonText.text = TaskInput;         //durationText;//inputText+"     "+durationText;
+                buttonText.text = durationInput;        //durationText;//inputText+"     "+durationText;
             }
             else
             {
@@ -47,7 +48,7 @@ public class ButtonListHandler : MonoBehaviour
             }
 
             // Optionally, clear the input field after sending the message
-            taskInputField.text = "TASK: \n Write Here: ";
+            taskInputField.text = "TASK: \n Write Here: \n \n \n TIME: \n Write Here:";
         }
         else
         {
