@@ -29,6 +29,7 @@ public class ButtonListHandler : MonoBehaviour
         string TaskInput = inputText.Substring("Task:\n Write Here:".Length).Trim();
         string durationInput = inputText.Substring("Task:\n Write Here:\n \n \n TIME:\n Write Here:".Length).Trim();
         TaskInput = TaskInput.Split('\n')[0].Trim(); // Take only the first line after trimming
+        durationInput = durationInput.Substring(Math.Max(0, durationInput.Length - 4)).Trim(); // Take only the last 4 characters
         // Only create the button if the input text is not empty
         if (!string.IsNullOrEmpty(inputText))// && !string.IsNullOrEmpty(durationText))
         {
@@ -40,7 +41,7 @@ public class ButtonListHandler : MonoBehaviour
             if (buttonText != null)
             {
                 
-                buttonText.text = durationInput;        //durationText;//inputText+"     "+durationText;
+                buttonText.text = TaskInput + "                     "+ durationInput ;        //durationText;//inputText+"     "+durationText;
             }
             else
             {
