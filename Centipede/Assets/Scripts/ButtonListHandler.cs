@@ -58,7 +58,7 @@ public class ButtonListHandler : MonoBehaviour
             }
 
             // Optionally, clear the input field after sending the message
-            taskInputField.text = "TASK: \n Write Here: \n \n \n TIME:\n Write in format\n(e.g 01:32 ~ 1 hour and 32 mins) : ";
+            taskInputField.text = "TASK:\n Write Here: \n \n \n TIME:\n Write in format\n(e.g 01:32 ~ 1 hour and 32 mins) : ";
         }
         else
         {
