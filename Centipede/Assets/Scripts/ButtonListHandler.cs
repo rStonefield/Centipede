@@ -17,8 +17,17 @@ public class ButtonListHandler : MonoBehaviour
     private int clickCount = 0; // Track the number of clicks
     private float lastClickTime = 0f; // Time of the last click
 
-    private GameObject lastHighlightedButton; // Reference to the last highlighted button
+    public  GameObject lastHighlightedButton; // Reference to the last highlighted button
     private Color originalColor; // Store the original button color
+    public void UpdateTaskListAfterDeletion()
+    {
+    // Load the current task list
+    List<string> tasks = LoadTaskList();
+
+    // Re-save the updated task list
+    SaveTaskList(tasks);
+    }
+
 
     void Start()
     {
