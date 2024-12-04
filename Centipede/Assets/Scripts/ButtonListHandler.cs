@@ -197,4 +197,31 @@ public class ButtonListHandler : MonoBehaviour
         if (string.IsNullOrEmpty(data)) return new List<string>();
         return new List<string>(data.Split(';'));
     }
+    public void RemoveTask(string buttonText)
+{
+    // Load the current task list
+    List<string> tasks = LoadTaskList();
+
+    // Remove the matching task from the list
+    for (int i = 0; i < tasks.Count; i++)
+    {
+        string[] parts = tasks[i].Split('|');
+        if (parts.Length == 2)
+        {
+            string taskText = parts[0].Trim();
+            string durationText = parts[1].Trim();
+
+            // Match with the button's text (ensure formatting matches)
+            if (buttonText.Contains(taskText) && buttonText.Contains(durationText))
+            {
+                tasks.RemoveAt(i);
+                break;
+            }
+        }
+    }
+
+    // Save the updated list back to persistent storage
+    SaveTaskList(tasks);
+}
+
 }

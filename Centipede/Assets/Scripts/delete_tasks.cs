@@ -13,11 +13,14 @@ public class DeleteButtonHandler : MonoBehaviour
             return;
         }
 
+        // Get the button text
+        string buttonText = buttonListHandler.lastHighlightedButton.GetComponentInChildren<TMPro.TMP_Text>().text;
+
+        // Remove the task from persistent storage
+        buttonListHandler.RemoveTask(buttonText);
+
         // Destroy the highlighted button
         Destroy(buttonListHandler.lastHighlightedButton);
-
-        // Remove the task from the saved list
-        buttonListHandler.UpdateTaskListAfterDeletion();
 
         // Clear the reference to the highlighted button
         buttonListHandler.lastHighlightedButton = null;
