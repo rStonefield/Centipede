@@ -314,7 +314,7 @@ MonoBehaviour:
   pomodoroSessionTime: 1500
   breakTime: 300
   adjustmentSpeed: 0.1
-  holdDelay: 0.25
+  holdDelay: 0.8
   pomodoroEndSound: {fileID: 8300000, guid: cf1cc760133cca24d9af4e0dc1f9e710, type: 3}
   breakEndSound: {fileID: 8300000, guid: cf1cc760133cca24d9af4e0dc1f9e710, type: 3}
 --- !u!1 &229880581
@@ -3610,7 +3610,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda118ff1d6144d59971c6be9d495d7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayText: {fileID: 0}
+  displayText: {fileID: 1333516965}
+  timeTextBox: {fileID: 1916378072}
 --- !u!1 &1414979534
 GameObject:
   m_ObjectHideFlags: 0
@@ -4323,6 +4324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayText: {fileID: 1333516965}
+  timeTextBox: {fileID: 0}
 --- !u!1 &1638339948
 GameObject:
   m_ObjectHideFlags: 0
