@@ -3612,6 +3612,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayText: {fileID: 1333516965}
   timeTextBox: {fileID: 1916378072}
+  extractedTime: 
+  extractedTimeInFormat: 
+  totalMinutes: 0
 --- !u!1 &1414979534
 GameObject:
   m_ObjectHideFlags: 0
@@ -4242,6 +4245,7 @@ GameObject:
   - component: {fileID: 1580330260}
   - component: {fileID: 1580330263}
   - component: {fileID: 1580330264}
+  - component: {fileID: 1580330265}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -4324,7 +4328,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayText: {fileID: 1333516965}
-  timeTextBox: {fileID: 0}
+  timeTextBox: {fileID: 1916378072}
+  extractedTime: 
+  extractedTimeInFormat: 
+  totalMinutes: 0
+--- !u!114 &1580330265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580330259}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff464f667715bea42a64c57ac2805bf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pomodoroTimerText: {fileID: 0}
+  breakTimerText: {fileID: 0}
+  pauseButtonText: {fileID: 0}
+  sessionStatusText: {fileID: 0}
+  stopButton: {fileID: 0}
+  startButton: {fileID: 0}
+  pomodoroAdjustButtons: {fileID: 0}
+  breakAdjustButtons: {fileID: 0}
+  pomodoroSessionTime: 1500
+  breakTime: 300
+  adjustmentSpeed: 0.1
+  holdDelay: 0.8
+  pomodoroEndSound: {fileID: 0}
+  breakEndSound: {fileID: 0}
 --- !u!1 &1638339948
 GameObject:
   m_ObjectHideFlags: 0

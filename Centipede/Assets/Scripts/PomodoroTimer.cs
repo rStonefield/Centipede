@@ -2,8 +2,13 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+
+
+
+
 public class PomodoroTimer : MonoBehaviour
 {
+    private Scene2Handler scene2Handler;
     public TextMeshProUGUI pomodoroTimerText; // Link to the Pomodoro session text
     public TextMeshProUGUI breakTimerText; // Link to the break session text
     public TextMeshProUGUI pauseButtonText; // Link to the pause button text
@@ -37,6 +42,27 @@ public class PomodoroTimer : MonoBehaviour
         UpdateBreakTimerDisplay(); // Ensure both timers are initialized and visible
         stopButton.interactable = false; // Disable Stop button initially (greyed out)
         audioSource = GetComponent<AudioSource>();//get the AudioSource component
+        scene2Handler = FindObjectOfType<Scene2Handler>();
+
+        if (scene2Handler != null)
+        {
+            // Access extractedTime from Scene2Handler
+            string currentTime = scene2Handler.extractedTime;
+
+            if (!string.IsNullOrEmpty(currentTime))
+            {
+                // Do something with the extracted time
+                Debug.Log("Current time from Scene2Handler: " + currentTime);
+            }
+            else
+            {
+                Debug.LogWarning("No extracted time found.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Scene2Handler not found in the scene.");
+        }
     }
 
     void Update()
@@ -138,22 +164,28 @@ public class PomodoroTimer : MonoBehaviour
 
     public void StartPomodoro()
     {
-        currentTime = pomodoroSessionTime; // Reset to Pomodoro session time
-        isSessionActive = true;
-        isPaused = false;
-        isBreakActive = false; // Not a break session
-        pauseButtonText.text = "Pause";
-        stopButton.interactable = true; // Enable the Stop button during the session
-        sessionStatusText.text = "Pomodoro Session";
+    Debug.Log("Value" + scene2Handler.totalMinutes);
+    // Attempt to parse extractedTime to a float and handle errors
+    
+    currentTime = scene2Handler.totalMinutes;
+    Debug.Log("Value" + currentTime);
 
-        // Hide start button and time adjustment buttons
-        startButton.gameObject.SetActive(false);
-        pomodoroAdjustButtons.SetActive(false);
-        breakAdjustButtons.SetActive(false);
+    isSessionActive = true;
+    isPaused = false;
+    isBreakActive = false; // Not a break session
+    pauseButtonText.text = "Pause";
+    stopButton.interactable = true; // Enable the Stop button during the session
+    sessionStatusText.text = "Pomodoro Session";
 
-        UpdatePomodoroTimerDisplay();
-        UpdateBreakTimerDisplay();
+    // Hide start button and time adjustment buttons
+    startButton.gameObject.SetActive(false);
+    pomodoroAdjustButtons.SetActive(false);
+    breakAdjustButtons.SetActive(false);
+
+    UpdatePomodoroTimerDisplay();
+    UpdateBreakTimerDisplay();
     }
+
 
     public void PausePomodoro()
     {
