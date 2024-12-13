@@ -4,11 +4,12 @@ using UnityEngine.UI;
 
 
 
-
-
 public class PomodoroTimer : MonoBehaviour
 {
     private Scene2Handler scene2Handler;
+    private DeleteButtonHandler deletebuttonHandler;
+    private ButtonListHandler buttonListHandler;
+
     public TextMeshProUGUI pomodoroTimerText; // Link to the Pomodoro session text
     public TextMeshProUGUI breakTimerText; // Link to the break session text
     public TextMeshProUGUI pauseButtonText; // Link to the pause button text
@@ -35,6 +36,22 @@ public class PomodoroTimer : MonoBehaviour
     private bool isPaused = false;
     private bool isBreakActive = false;
 
+    public int XP_base_rate = 20; //xp rate of 20 per min 
+    public int Gold_base_rate = 1; //gold rate of 1 per min 
+
+    public int XP_total = 0;
+    public int Gold_total = 0; 
+
+    public int XP_increment = 0;
+    public int Gold_increment = 0;
+
+    public TextMeshProUGUI Gold_count; //Link gold count text box 
+    public TextMeshProUGUI Xp_count; //Link xp count text box 
+    
+    private const string GoldKey = "GoldTotal"; // Key for saving gold in PlayerPrefs
+    private const string XPKey = "XPTotal"; // Key for saving XP in PlayerPrefs 
+
+
     void Start()
     {
         currentTime = pomodoroSessionTime; // Set current time to Pomodoro time initially
@@ -43,6 +60,15 @@ public class PomodoroTimer : MonoBehaviour
         stopButton.interactable = false; // Disable Stop button initially (greyed out)
         audioSource = GetComponent<AudioSource>();//get the AudioSource component
         scene2Handler = FindObjectOfType<Scene2Handler>();
+
+    //
+        Gold_total = PlayerPrefs.GetInt(GoldKey, Gold_total); // Default is 0 if not saved
+        XP_total = PlayerPrefs.GetInt(XPKey, XP_total);       // Default is 0 if not saved
+
+        UpdateGoldDisplay();
+        UpdateXPDisplay();
+
+    //  
 
         if (scene2Handler != null)
         {
@@ -162,13 +188,22 @@ public class PomodoroTimer : MonoBehaviour
         InvokeRepeating("DecreaseBreakTime", holdDelay, adjustmentSpeed); // Start continuous decrease
     }
 
+
+
+
     public void StartPomodoro()
     {
-    Debug.Log("Value" + scene2Handler.totalMinutes);
-    // Attempt to parse extractedTime to a float and handle errors
-    
-    currentTime = scene2Handler.totalMinutes;
-    Debug.Log("Value" + currentTime);
+    // Check if a task has been selected by verifying if totalMinutes has a valid value
+    if (scene2Handler.totalMinutes > 0)
+    {
+        currentTime = scene2Handler.totalMinutes;
+        Debug.Log("Task selected, using totalMinutes: " + currentTime);
+    }
+    else
+    {
+        currentTime = pomodoroSessionTime;
+        Debug.Log("No task selected, using default pomodoroSessionTime: " + currentTime);
+    }
 
     isSessionActive = true;
     isPaused = false;
@@ -185,6 +220,7 @@ public class PomodoroTimer : MonoBehaviour
     UpdatePomodoroTimerDisplay();
     UpdateBreakTimerDisplay();
     }
+
 
 
     public void PausePomodoro()
@@ -212,15 +248,77 @@ public class PomodoroTimer : MonoBehaviour
         pomodoroAdjustButtons.SetActive(true);
         breakAdjustButtons.SetActive(true);
 
+        //reset 
+        scene2Handler.totalMinutes = 0;
+
         sessionStatusText.text = "Ready for Pomodoro";
         UpdatePomodoroTimerDisplay();
         UpdateBreakTimerDisplay();
         Debug.Log("Pomodoro session stopped!");
+        scene2Handler.displayText.text = " ";
 
     }
 
     void EndPomodoro()
     {
+    if (scene2Handler.totalMinutes > 0)
+    {
+        // Stop everything if totalMinutes > 0
+        isSessionActive = false;
+        isBreakActive = false;
+        isPaused = true;
+        sessionStatusText.text = "Session Stopped"; // Update status text
+        stopButton.interactable = true; // Disable the Stop button
+        Debug.Log("Session stopped due to remaining total minutes in Scene2Handler.");
+        //scene2Handler.displayText.text = "Task Completed \n Xp Gained: \n Gold Gained:";
+
+        Gold_increment = Gold_base_rate * (int)scene2Handler.totalMinutes;
+        XP_increment = XP_base_rate * (int)scene2Handler.totalMinutes;
+
+        XP_total = XP_total + XP_base_rate * (int)scene2Handler.totalMinutes;
+        Gold_total = Gold_total + Gold_base_rate * (int)scene2Handler.totalMinutes; 
+        scene2Handler.displayText.text = "Task Completed \nXp Gained: +"+XP_increment.ToString()+"\nGold Gained: +"+Gold_increment.ToString(); 
+
+        SaveGold();
+        SaveXP();
+        UpdateGoldDisplay();
+        UpdateXPDisplay();
+        
+        // Retrieve the last clicked button text from PlayerPrefs
+        string lastClickedButtonText = PlayerPrefs.GetString("LastClickedButtonText", null);
+
+        if (!string.IsNullOrEmpty(lastClickedButtonText))
+        {
+            // Remove the task from the persistent list
+            buttonListHandler.RemoveTask(lastClickedButtonText);
+
+            // Find and destroy the button in the current scene
+            foreach (Transform child in buttonListHandler.buttonListContent)
+            {
+                TMP_Text buttonTMPText = child.GetComponentInChildren<TMP_Text>();
+                if (buttonTMPText != null && buttonTMPText.text == lastClickedButtonText)
+                {
+                    Destroy(child.gameObject);
+                    Debug.Log($"Button '{lastClickedButtonText}' and associated task deleted.");
+                    break;
+                }
+            }
+
+            // Clear the stored reference in PlayerPrefs
+            PlayerPrefs.DeleteKey("LastClickedButtonText");
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            Debug.LogWarning("No button text found to delete.");
+        }
+
+
+
+    }
+    else
+    {
+        // Continue with the existing break logic
         isSessionActive = false;
         currentTime = breakTime; // Switch to break time
         isBreakActive = true; // Break session starts
@@ -228,7 +326,7 @@ public class PomodoroTimer : MonoBehaviour
         pauseButtonText.text = "Pause"; // Reset pause button text
         sessionStatusText.text = "Break Time";
 
-        //Play Pomodoro end sound
+        // Play Pomodoro end sound
         PlaySound(pomodoroEndSound);
 
         stopButton.interactable = true; // Enable the Stop button during the break session
@@ -237,6 +335,58 @@ public class PomodoroTimer : MonoBehaviour
         isSessionActive = true; // Start the break automatically
         UpdateBreakTimerDisplay(); // Update the break timer to start counting down
     }
+    }
+
+    private void UpdateGoldDisplay()
+    {
+        if (Gold_count != null)
+        {
+            Gold_count.text = Gold_total.ToString();
+            
+        }
+        else
+        {
+            Debug.LogError("Gold_count text box is not assigned!");
+        }
+    }
+
+    private void UpdateXPDisplay()
+    {
+        if (Xp_count != null)
+        {
+            Xp_count.text = XP_total.ToString();
+            
+        }
+        else
+        {
+            Debug.LogError("Xp_count text box is not assigned!");
+        }
+    }
+
+    private void SaveGold()
+    {
+        PlayerPrefs.SetInt(GoldKey, Gold_total); // Save gold
+        PlayerPrefs.Save();
+    }
+
+    private void SaveXP()
+    {
+        PlayerPrefs.SetInt(XPKey, XP_total); // Save XP
+        PlayerPrefs.Save();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     void EndBreak()
     {
@@ -280,7 +430,7 @@ public class PomodoroTimer : MonoBehaviour
 
     public void DecreasePomodoroTime()
     {
-        if (pomodoroSessionTime > 60) // Ensure time doesn't go below 1 minute
+        if (pomodoroSessionTime > 360) // Ensure time doesn't go below 1 minute
         {
             pomodoroSessionTime -= 60; // Subtract 1 minute
             if (!isSessionActive && !isBreakActive)

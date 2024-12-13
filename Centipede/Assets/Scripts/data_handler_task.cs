@@ -27,13 +27,13 @@ public class Scene2Handler : MonoBehaviour
                     timeTextBox.text = extractedTime; // Overwrite the timer
                     
                     extractedTimeInFormat = extractedTime;
-                    Debug.Log("Value" + extractedTimeInFormat);
+                    Debug.Log("Value" + totalMinutes);
 
                     string[] timeParts = extractedTimeInFormat.Split(':');
                     int hours = int.Parse(timeParts[0]);
                     int minutes = int.Parse(timeParts[1]);
                     totalMinutes = hours * 60 + minutes;
-
+                    
 
                 }
                 else

@@ -166,7 +166,11 @@ public class ButtonListHandler : MonoBehaviour
     }
 
     private void OnGeneratedButtonClick(string buttonText)
-    {
+    {   
+        // Save the button text to PlayerPrefs for persistence MIGHT NEED TO CHANGE THIS !!!!!!!!!!!!!!!!!
+        PlayerPrefs.SetString("LastClickedButtonText", buttonText);
+        PlayerPrefs.Save();
+
         // Store the button text in the static class
         SceneDataHolder.ButtonString = buttonText;
 
